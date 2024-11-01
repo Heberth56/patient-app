@@ -4,30 +4,90 @@ import Navbar from "../components/ui/Navbar";
 import FormContent from "../components/forms/FormContent";
 import CustomInput from "../components/forms/CustomInput";
 import CustomButton from "../components/forms/CustomButton";
+import toast, { Toaster } from "react-hot-toast";
+import {
+  addPatientDataThunk,
+  editPatientDataThunk,
+  getPatientDataThunk,
+  resetState,
+  patientForm,
+  patientData,
+  patientError,
+  patientLoading,
+  patientMessage,
+} from "../app/slice/patientSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 const Pacientes = () => {
-  let loading = false;
+  const navigate = useNavigate();
+  const params = useParams();
+  const dispatch = useDispatch();
+
+  const data = useSelector(patientData);
+  const error = useSelector(patientError);
+  const formData = useSelector(patientForm);
+  const loading = useSelector(patientLoading);
+  const message = useSelector(patientMessage);
+
+  useEffect(() => {
+    if (params.patient_id) dispatch(getPatientDataThunk(params.patient_id));
+    else dispatch(resetState());
+  }, [params]);
+
+  const handleSubmit = (values, reset_form) => {
+    if (params.patient_id) {
+      dispatch(
+        editPatientDataThunk({
+          _id: params.patient_id,
+          name: values.nombre,
+          paterno: values.paterno,
+          materno: values.materno,
+          age: values.age,
+          phone: values.phone + "",
+        })
+      )
+        .unwrap()
+        .then(() => toast.success("Paciente editado exitosamente"));
+      return;
+    }
+
+    dispatch(
+      addPatientDataThunk({
+        name: values.nombre,
+        paterno: values.paterno,
+        materno: values.materno,
+        age: values.age,
+        phone: values.phone + "",
+      })
+    )
+      .unwrap()
+      .then(() => {
+        toast.success("Paciente creado exitosamente");
+        reset_form();
+      });
+  };
+
   return (
     <div>
       <Navbar />
-
       <Formik
-        initialValues={{}}
+        initialValues={formData}
         enableReinitialize={true}
         // validationSchema={}
         onSubmit={(values, { resetForm }) => {
-          // handleSubmit(values, resetForm);
-          console.log(values);
+          handleSubmit(values, resetForm);
         }}
       >
         {({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <div className="md:w-1/2 w-full md:mx-auto px-4 py-5">
               <FormContent title="REGISTRO DE PACIENTES">
+                <Toaster />
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="md:w-1/2">
                     <CustomInput
                       title="Nombres"
-                      name="name"
+                      name="nombre"
                       placeholder="Ingrese su nombre completo"
                     />
 
@@ -75,7 +135,7 @@ const Pacientes = () => {
                     bg="bg-red-500"
                     disabled={loading}
                     type="button"
-                    //   onClick={() => handleNavigate("/especialidad/admin")}
+                    onClick={() => navigate("/pacientes/admin")}
                   >
                     Cancelar
                   </CustomButton>
