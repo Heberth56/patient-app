@@ -10,7 +10,7 @@ const CustomInput = ({
 }) => {
   return (
     <div className="flex flex-col gap-1 w-full">
-      <label className="text-blue-950 font-semibold">
+      <label className="text-indigo-800 font-semibold text-lg">
         {title}{" "}
         {required && <span className="text-red-500 font-medium">*</span>}
       </label>

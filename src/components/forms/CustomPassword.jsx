@@ -13,7 +13,7 @@ const CustomPassword = ({
 
   return (
     <div className="flex flex-col gap-1 w-full">
-      <label className="text-blue-950 font-semibold">{title}</label>
+      <label className="text-indigo-800 font-semibold text-lg">{title}</label>
       <div className="text-xl rounded-2xl overflow-hidden pr-4 flex border-2 bg-white border-[#F3F4F6] items-center gap-3">
         <Field
           name={name}

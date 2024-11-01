@@ -7,6 +7,7 @@ import CustomInput from "../components/forms/CustomInput";
 import CustomPassword from "../components/forms/CustomPassword";
 import CustomButton from "../components/forms/CustomButton";
 // import { authLoginThunk } from "../app/slice/authSlice";
+import imgLogin from "../assets/images/imgLogin.png";
 function Login() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
@@ -20,10 +21,10 @@ function Login() {
   let isLoading = false;
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-50 to-violet-50">
-      <div className="grid grid-cols-2 gap-4 w-full max-w-2xl p-8 rounded shadow-2xl mx-2 bg-gradient-to-br from-white to-violet-100">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 to-violet-50">
+      <div className="grid grid-cols-2 gap-4 w-full max-w-2xl p-8 rounded shadow-2xl mx-2 bg-gradient-to-br from-white to-indigo-100">
         <div>
-          <h1 className="text-center text-2xl font-semibold mb-4 text-violet-700">
+          <h1 className="text-center text-2xl font-bold mb-4 text-indigo-800 uppercase">
             Inicio de Sessión
           </h1>
           <Formik
@@ -33,6 +34,7 @@ function Login() {
               //   dispatch(authLoginThunk(values)).then((x) => {
               //     if (!x.error) navigation("/home");
               //   });
+              navigation("/home");
             }}
           >
             {({ handleSubmit }) => (
@@ -58,7 +60,11 @@ function Login() {
           </Formik>
         </div>
         <div className="flex items-center justify-center">
-          {/* <Lottie animationData={loginLottie} className="max-w-xs mx-auto" /> */}
+          <img
+            src={imgLogin}
+            alt="Imagen de inicio de sessión"
+            className="max-w-xs mx-auto"
+          />
         </div>
       </div>
     </div>
