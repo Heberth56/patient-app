@@ -1,6 +1,7 @@
 import axios from "axios";
+import { API_URL } from "../../config";
 const createAxios = axios.create({
-  baseURL: "https://pattient-api.onrender.com",
+  baseURL: API_URL,
 });
 createAxios.interceptors.request.use((config) => {
   const token = localStorage.getItem("chiri_token");

@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { Formik } from "formik";
+import { loginSchema } from "../utils/schema";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { schema } from "../utils/schema";
 import CustomInput from "../components/forms/CustomInput";
+import toast, { Toaster } from "react-hot-toast";
 import CustomPassword from "../components/forms/CustomPassword";
 import CustomButton from "../components/forms/CustomButton";
 // import { authLoginThunk } from "../app/slice/authSlice";
@@ -27,14 +28,17 @@ function Login() {
           <h1 className="text-center text-2xl font-bold mb-4 text-indigo-800 uppercase">
             Inicio de Sessión
           </h1>
+          <Toaster />
           <Formik
             initialValues={{ username: "", password: "" }}
-            // validationSchema={schema}
+            validationSchema={loginSchema}
             onSubmit={(values) => {
-              //   dispatch(authLoginThunk(values)).then((x) => {
-              //     if (!x.error) navigation("/home");
-              //   });
-              navigation("/home");
+              if (values.username == "admin" && values.password == "libre")
+                navigation("/home");
+              else
+                toast.error(
+                  "Los datos ingresados no son correctos intente nuevamente"
+                );
             }}
           >
             {({ handleSubmit }) => (
