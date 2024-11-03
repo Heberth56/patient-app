@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Formik } from "formik";
+import { patientSchema } from "../utils/schema";
 import Navbar from "../components/ui/Navbar";
 import FormContent from "../components/forms/FormContent";
 import CustomInput from "../components/forms/CustomInput";
@@ -44,6 +45,7 @@ const Pacientes = () => {
           materno: values.materno,
           age: values.age,
           phone: values.phone + "",
+          costo: values.costo,
         })
       )
         .unwrap()
@@ -58,6 +60,7 @@ const Pacientes = () => {
         materno: values.materno,
         age: values.age,
         phone: values.phone + "",
+        costo: values.costo,
       })
     )
       .unwrap()
@@ -73,7 +76,7 @@ const Pacientes = () => {
       <Formik
         initialValues={formData}
         enableReinitialize={true}
-        // validationSchema={}
+        validationSchema={patientSchema}
         onSubmit={(values, { resetForm }) => {
           handleSubmit(values, resetForm);
         }}
@@ -109,7 +112,6 @@ const Pacientes = () => {
                       name="age"
                       type="number"
                       placeholder="25"
-                      required={false}
                     />
 
                     <CustomInput
@@ -117,7 +119,13 @@ const Pacientes = () => {
                       name="phone"
                       type="number"
                       placeholder="79652314"
-                      required={false}
+                    />
+
+                    <CustomInput
+                      title="Costo:"
+                      name="costo"
+                      type="number"
+                      placeholder="250"
                     />
                   </div>
                 </div>

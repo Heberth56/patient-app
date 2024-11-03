@@ -45,7 +45,7 @@ const PacientesAdmin = () => {
     {
       header: "Nombre completo",
       accessorFn: (row) => {
-        return `${row.nombre} ${row.paterno} ${row.materno}`
+        return `${row.paterno} ${row.materno} ${row.nombre}`
           .toLowerCase()
           .replace(/\b\w/g, (char) => char.toUpperCase());
       },

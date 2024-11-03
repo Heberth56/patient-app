@@ -19,6 +19,7 @@ const initialState = {
     materno: "",
     age: "",
     phone: "",
+    costo: "",
   },
 };
 
