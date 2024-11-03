@@ -1,5 +1,5 @@
 import Navbar from "../components/ui/Navbar";
-import imgMedicine from "../assets/images/Medicine.png";
+import imgMedicine from "../assets/images/Medicine.jpeg";
 const Home = () => {
   return (
     <div>
