@@ -5,6 +5,7 @@ import Pacientes from "./pages/Pacientes";
 import PacientesAdmin from "./pages/PacientesAdmin";
 import Consultas from "./pages/Consultas";
 import ConsultAdmin from "./pages/ConsultAdmin";
+import ImportesAdmin from "./pages/ImportesAdmin";
 const App = () => {
   return (
     <Routes>
@@ -16,6 +17,7 @@ const App = () => {
       <Route path="/consultas" element={<Consultas />} />
       <Route path="/consultas/:consult_id" element={<Consultas />} />
       <Route path="/consultas/admin" element={<ConsultAdmin />} />
+      <Route path="/importes/admin" element={<ImportesAdmin />} />
     </Routes>
   );
 };

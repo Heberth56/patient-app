@@ -1,12 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-  editPatientApi,
-  listPatientApi,
-  removePatientApi,
-  getPatientApi,
-} from "../api/patientApi";
-
-import { addConsultApi, listConsultApi } from "../api/consultApi";
+  addConsultApi,
+  listConsultApi,
+  removeConsultApi,
+  filterConsultApi,
+} from "../api/consultApi";
 
 const initialState = {
   data: [],
@@ -15,6 +13,7 @@ const initialState = {
   message: "",
   formData: {
     _id: "",
+    fecha: "",
     patient_id: "",
     medicion_type: "",
     costo: "",
@@ -26,19 +25,6 @@ export const addConsultDataThunk = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { futuresyo } = await addConsultApi(payload);
-      if (futuresyo.success) return futuresyo.data;
-      else return rejectWithValue(futuresyo.message);
-    } catch (err) {
-      return rejectWithValue(err.message);
-    }
-  }
-);
-
-export const editPatientDataThunk = createAsyncThunk(
-  "edit-patient/post",
-  async (payload, { rejectWithValue }) => {
-    try {
-      const { futuresyo } = await editPatientApi(payload);
       if (futuresyo.success) return futuresyo.data;
       else return rejectWithValue(futuresyo.message);
     } catch (err) {
@@ -60,11 +46,11 @@ export const listConsultDataThunk = createAsyncThunk(
   }
 );
 
-export const getPatientDataThunk = createAsyncThunk(
-  "get-patient/post",
+export const filterConsultDataThunk = createAsyncThunk(
+  "filter-consult/get",
   async (payload, { rejectWithValue }) => {
     try {
-      const { chiri } = await getPatientApi(payload);
+      const { chiri } = await filterConsultApi(payload);
       if (chiri.success) return chiri.data;
       else return rejectWithValue(chiri.message);
     } catch (err) {
@@ -73,11 +59,11 @@ export const getPatientDataThunk = createAsyncThunk(
   }
 );
 
-export const removePatientDataThunk = createAsyncThunk(
-  "delete-patient/delete",
+export const removeConsultDataThunk = createAsyncThunk(
+  "delete-consult/delete",
   async (payload, { rejectWithValue }) => {
     try {
-      const { chiri } = await removePatientApi(payload);
+      const { chiri } = await removeConsultApi(payload);
       if (chiri.success) return chiri.data;
       else return rejectWithValue(chiri.message);
     } catch (err) {
@@ -108,22 +94,6 @@ const consultSlice = createSlice({
         state.message = action.payload;
       })
 
-      .addCase(editPatientDataThunk.pending, (state) => {
-        state.isLoading = true;
-        state.error = false;
-        state.message = "";
-      })
-
-      .addCase(editPatientDataThunk.fulfilled, (state, action) => {
-        state.isLoading = false;
-      })
-
-      .addCase(editPatientDataThunk.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = true;
-        state.message = action.payload;
-      })
-
       .addCase(listConsultDataThunk.pending, (state) => {
         state.isLoading = true;
         state.error = false;
@@ -141,36 +111,36 @@ const consultSlice = createSlice({
         state.message = action.payload;
       })
 
-      .addCase(getPatientDataThunk.pending, (state) => {
+      .addCase(filterConsultDataThunk.pending, (state) => {
         state.isLoading = true;
         state.error = false;
         state.message = "";
       })
 
-      .addCase(getPatientDataThunk.fulfilled, (state, action) => {
+      .addCase(filterConsultDataThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.formData = action.payload;
+        state.data = action.payload;
       })
 
-      .addCase(getPatientDataThunk.rejected, (state, action) => {
+      .addCase(filterConsultDataThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = true;
         state.message = action.payload;
       })
 
-      .addCase(removePatientDataThunk.pending, (state) => {
+      .addCase(removeConsultDataThunk.pending, (state) => {
         state.isLoading = true;
         state.error = false;
         state.message = "";
       })
 
-      .addCase(removePatientDataThunk.fulfilled, (state, action) => {
+      .addCase(removeConsultDataThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         let index = state.data.findIndex((elem) => elem._id == action.payload);
         if (index !== -1) state.data.splice(index, 1);
       })
 
-      .addCase(removePatientDataThunk.rejected, (state, action) => {
+      .addCase(removeConsultDataThunk.rejected, (state, action) => {
         state.message = action.payload;
         state.isLoading = false;
         state.error = true;

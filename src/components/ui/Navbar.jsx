@@ -25,6 +25,9 @@ const Navbar = () => {
         <ButtonNav text="Listado Consultas" to="/consultas/admin">
           <FaClipboard />
         </ButtonNav>
+        <ButtonNav text="Importes" to="/importes/admin">
+          <FaClipboard />
+        </ButtonNav>
         <ButtonNav text="Salir" to="/" out={true}>
           <FaSignOutAlt />
         </ButtonNav>

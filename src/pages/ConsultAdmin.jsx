@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import {
   listConsultDataThunk,
+  removeConsultDataThunk,
   consultData,
   consultError,
   consultLoading,
   consultMessage,
 } from "../app/slice/consultSlice";
 import TableContent from "../components/tables/TableContent";
+import Options from "../components/tables/Options";
+import Confirm from "../components/ui/Confirm";
 import toast, { Toaster } from "react-hot-toast";
 import Navbar from "../components/ui/Navbar";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { medicion } from "../utils/dataExtra";
 const ConsultAdmin = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const data = useSelector(consultData);
@@ -61,6 +62,14 @@ const ConsultAdmin = () => {
       header: "Costo",
       accessorKey: "costo",
     },
+
+    {
+      header: "Opciones",
+      accessorKey: "status",
+      cell: ({ row }) => (
+        <Options edit={false} onClick={() => handleConfirm(row.original)} />
+      ),
+    },
   ];
 
   const handleSelectChange = (event) => {
@@ -71,6 +80,25 @@ const ConsultAdmin = () => {
       return;
     }
     setAux(data);
+  };
+
+  const handleDelete = (id, toastId) => {
+    toast.dismiss(toastId);
+    dispatch(removeConsultDataThunk(id))
+      .unwrap()
+      .then(() => {
+        toast.success("Consulta eliminado exitosamente");
+      });
+  };
+
+  const handleConfirm = (value) => {
+    toast.remove();
+    toast((t) => (
+      <Confirm
+        text={`¿Está seguro de que desea eliminar la consulta`}
+        onClick={() => handleDelete(value._id, t.id)}
+      />
+    ));
   };
 
   return (

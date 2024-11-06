@@ -13,11 +13,10 @@ import {
   consultLoading,
 } from "../app/slice/consultSlice";
 import { medicion } from "../utils/dataExtra";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 const Consultas = () => {
   const navigate = useNavigate();
-  const params = useParams();
   const dispatch = useDispatch();
 
   const dataPatient = useSelector(patientData);
@@ -29,22 +28,6 @@ const Consultas = () => {
   }, [dispatch]);
 
   const handleSubmit = (values, reset_form) => {
-    // if (params.patient_id) {
-    //   dispatch(
-    //     editPatientDataThunk({
-    //       _id: params.patient_id,
-    //       name: values.nombre,
-    //       paterno: values.paterno,
-    //       materno: values.materno,
-    //       age: values.age,
-    //       phone: values.phone + "",
-    //     })
-    //   )
-    //     .unwrap()
-    //     .then(() => toast.success("Paciente editado exitosamente"));
-    //   return;
-    // }
-
     dispatch(addConsultDataThunk(values))
       .unwrap()
       .then(() => {
@@ -70,6 +53,12 @@ const Consultas = () => {
               <FormContent title="REGISTRO DE PACIENTES">
                 <Toaster />
                 <div className="">
+                  <CustomInput
+                    title="Fecha:"
+                    name="fecha"
+                    type="date"
+                    placeholder=""
+                  />
                   <CustomDropdown
                     title="Paciente:"
                     name="patient_id"
