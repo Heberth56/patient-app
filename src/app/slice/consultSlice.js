@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   data: [],
+  content: [],
   isLoading: false,
   error: false,
   message: "",
@@ -119,7 +120,7 @@ const consultSlice = createSlice({
 
       .addCase(filterConsultDataThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.data = action.payload;
+        state.content = action.payload;
       })
 
       .addCase(filterConsultDataThunk.rejected, (state, action) => {
@@ -152,6 +153,7 @@ export const consultLoading = (state) => state.consultSlice.isLoading;
 export const consultError = (state) => state.consultSlice.error;
 export const consultMessage = (state) => state.consultSlice.message;
 export const consultData = (state) => state.consultSlice.data;
+export const consultContent = (state) => state.consultSlice.content;
 export const consultForm = (state) => state.consultSlice.formData;
 
 export const { resetState } = consultSlice.actions;

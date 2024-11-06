@@ -6,6 +6,7 @@ import {
   consultError,
   consultLoading,
   consultMessage,
+  consultContent,
 } from "../app/slice/consultSlice";
 import toast, { Toaster } from "react-hot-toast";
 import Navbar from "../components/ui/Navbar";
@@ -14,7 +15,7 @@ import CustomInput from "../components/forms/CustomInput";
 const ImportesAdmin = () => {
   const dispatch = useDispatch();
 
-  const data = useSelector(consultData);
+  const data = useSelector(consultContent);
   const error = useSelector(consultError);
   const isLoading = useSelector(consultLoading);
   const message = useSelector(consultMessage);
