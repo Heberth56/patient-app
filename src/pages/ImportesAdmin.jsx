@@ -37,7 +37,6 @@ const ImportesAdmin = () => {
         <Formik
           initialValues={{ anio: "" }}
           enableReinitialize={true}
-          // validationSchema={}
           onSubmit={(values, { resetForm }) => {
             handleSubmit(values, resetForm);
           }}
@@ -79,10 +78,17 @@ const ImportesAdmin = () => {
           </thead>
           <tbody>
             {data[0]?.map((elem, index) => {
+              const num = String(index + 1).padStart(3, "0");
               return (
                 <tr key={index} className="text-gray-600 hover:bg-gray-100">
                   <td>{index + 1}</td>
-                  <td>{elem.codigo}</td>
+                  <td>
+                    {elem.codigo[0] +
+                      elem.codigo[1] +
+                      elem.codigo[2] +
+                      "-" +
+                      num}
+                  </td>
                   <td>{elem.nombres}</td>
                   <td>{elem.fecha}</td>
                   <td>{elem.edad}</td>

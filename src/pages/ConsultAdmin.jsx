@@ -44,7 +44,10 @@ const ConsultAdmin = () => {
     },
     {
       header: "Código",
-      accessorKey: "codigo",
+      accessorFn: (row, i) => {
+        const num = String(i + 1).padStart(3, "0");
+        return `${row.codigo[0]}${row.codigo[1]}${row.codigo[2]}-${num}`.toUpperCase();
+      },
     },
     {
       header: "Nombre completo",
